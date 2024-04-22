@@ -41,16 +41,16 @@ npm run build
 yarn build
 ```
 ## Архитектура
-**1. class API**
-  Реализует взаимодействие с сервером. Конструктор принимает следующие аргументы:
+**1. class API**<br>
+  <i>Реализует взаимодействие с сервером. Конструктор принимает следующие аргументы:</i>
+  
+  - baseURL: string - запрос для URL;
+  - options: RequestInit = {} - опции запроса для доступа к серверу.
 
-  *baseURL: string - запрос для URL;
-  *options: RequestInit = {} - опции запроса для доступа к серверу.
-
-  class API имеет следующие методы:
-  *handleResponse(response: Response): Promise<object> - используется для обработки ответа сервера;
-  *get(uri: string) - используется для получения ответа сервера;
-  *post(uri: string, data: object, method: ApiPostMethods = 'POST') - используется для отправки данных на сервер.
+  <i>class API имеет следующие методы:</i>
+  - handleResponse(response: Response): Promise<object> - используется для обработки ответа сервера;
+  - get(uri: string) - используется для получения ответа сервера;
+  - post(uri: string, data: object, method: ApiPostMethods = 'POST') - используется для отправки данных на сервер.
 **2. class EventEmitter**
   Предоставляет возможность подписаться на все события или слушать их. Имеет свойство:
   *_events: Map<EventName, Set<Subscriber>>;
