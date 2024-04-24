@@ -71,6 +71,7 @@ yarn build
     emit(event: string, data?: T): void;
     trigger(event: string, context?: Partial): (data: T) => void; }
   ```
+  <br>
 ### 3. class Component
   Отрисовывает интерфейс для взаимодейтсивя с DOM-элементами. Является абстрактным классом.<br>
   Имеет следующие методы:
