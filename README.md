@@ -69,12 +69,11 @@ yarn build
 
   Имеет интерфейс:
   
-    ```TypeScript
+    ```ts
     interface IEvents {
     on(event: string, callback: (data: T) => void): void;
     emit(event: string, data?: T): void;
     trigger(event: string, context?: Partial): (data: T) => void; }
-  
   ```
 
 ### 3. class Component
