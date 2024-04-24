@@ -40,9 +40,9 @@ npm run build
 ```
 yarn build
 ```
-## Архитектура
-## Базовый код
-**1. class API**<br>
+#### Архитектура
+### Базовый код
+## 1. class API**<br>
   Реализует взаимодействие с сервером. Конструктор принимает следующие аргументы:
   
   - baseURL: string - запрос для URL;
@@ -53,7 +53,7 @@ yarn build
   - get(uri: string) - используется для получения ответа сервера;
   - post(uri: string, data: object, method: ApiPostMethods = 'POST') - используется для отправки данных на сервер.<br>
   
-**2. class EventEmitter**<br>
+## 2. class EventEmitter**<br>
   Предоставляет возможность подписаться на все события или слушать их. Имеет свойство:
   - _events: Map<EventName, Set<Subscriber>>;
   Имеет следующие методы:
@@ -64,13 +64,13 @@ yarn build
   - offAll() - сбрасывает все события;
   - trigger<T extends object>(eventName: string, context?: Partial<T>) - делает коллбек триггер, генерирующий событие при вызове;
   Имеет интерфейс:
-    ```TypeScript
+    ```
     interface IEvents {
     on(event: string, callback: (data: T) => void): void;
     emit(event: string, data?: T): void;
     trigger(event: string, context?: Partial): (data: T) => void; }
   ```
-  **3. class Component**
+## 3. class Component**
   Отрисовывает интерфейс для взаимодейтсивя с DOM-элементами. Является абстрактным классом.<br>
   Имеет следующие методы:
   *toggleClass(element: HTMLElement, class: string) - переключает класс элемента;
@@ -80,7 +80,7 @@ yarn build
   *setVisible(element: HTMLElement) - показывает элемент;
   *setImage(element: HTMLElement, src: string, alt?: string) - добавляет изображение и альтернативный текст элементу;
   *render(data?: any) - отрисовывает элемент.
-  **3. class Model**
+## 4. class Model**
   Является дженериком и абстракным классом моделей данных.
   Имеет следующие методы:
   *toggleClass(element: HTMLElement, class: string) - переключает класс элемента;
@@ -91,7 +91,7 @@ yarn build
   *setImage(element: HTMLElement, src: string, alt?: string) - добавляет изображение и альтернативный текст;
   *render(data?: any) - отрисовывает элемент.
 ## Компоненты модели данных 
-**1. class ProductItem** 
+## 1. class ProductItem** 
   Реализуется от class Model.
   Конструктор принимает следующие аргументы:
   *id: string;
@@ -100,20 +100,20 @@ yarn build
   *category: string;
   *image: string;
   *price: number | null.
-**2. class BasketItem**
+## 2. class BasketItem**
   Имеет следующие свойства:
   *id: string;
   *title: string;
   *price: number | null.
-**3. class OrderForm**
+## 3. class OrderForm**
   Имеет свойство address: string;
-**4. class ContactsForm**
+## 4. class ContactsForm**
   Имеет следующие свойства:
   *email: string;
   *phone: string.
-**5. class OrderResult**
+## 5. class OrderResult**
 Имеет свойство  id: string.
-**6. class AppState**
+## 6. class AppState**
   Реализуется от class Model.
   Предназначен для хранения актуального состояния приложения.
   Имеет следующие  методы:
