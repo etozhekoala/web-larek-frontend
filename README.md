@@ -69,7 +69,7 @@ yarn build
 
   Имеет интерфейс:
   
-    ```ts
+    ```
     interface IEvents {
     on(event: string, callback: (data: T) => void): void;
     emit(event: string, data?: T): void;
