@@ -65,7 +65,7 @@ yarn build
   - ```trigger<T extends object>(eventName: string, context?: Partial)<T>``` - делает коллбек триггер, генерирующий событие при вызов.<br>
 
   Имеет интерфейс:
-    ```
+    ```TypeScript
     interface IEvents {
     on(event: string, callback: (data: T) => void): void;
     emit(event: string, data?: T): void;
