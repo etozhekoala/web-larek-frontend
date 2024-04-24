@@ -384,6 +384,18 @@ yarn build
     }
   ```
 
+  - Интерфейс описания состояния приложения
+
+  ```ts
+    export interface IAppState {
+      catalog: IProductItem[];
+      basket: string[];
+      preview: string | null;
+      order: IOrderForm | null;
+      loading: boolean;
+  }
+  ```
+
   - Интерфейс формы заказа
 
   ```ts
@@ -423,17 +435,3 @@ yarn build
       errors: string;
     }
   ```
-
-  - Интерфейс страницы подтверждения
-
-  ```ts
-    interface ISuccess {
-      total: string;
-    }
-
-    interface ICardActions {
-      onClick: (event: MouseEvent) => void;
-    }
-  ```
-
-  
