@@ -41,26 +41,27 @@ npm run build
 yarn build
 ```
 ## Архитектура
+## Базовый код
 **1. class API**<br>
-  <i>Реализует взаимодействие с сервером. Конструктор принимает следующие аргументы:</i>
+  Реализует взаимодействие с сервером. Конструктор принимает следующие аргументы:
   
   - baseURL: string - запрос для URL;
   - options: RequestInit = {} - опции запроса для доступа к серверу.
 
-  <i>class API имеет следующие методы:</i>
+  class API имеет следующие методы:
   - handleResponse(response: Response): Promise<object> - используется для обработки ответа сервера;
   - get(uri: string) - используется для получения ответа сервера;
   - post(uri: string, data: object, method: ApiPostMethods = 'POST') - используется для отправки данных на сервер.
 **2. class EventEmitter**
   Предоставляет возможность подписаться на все события или слушать их. Имеет свойство:
-  *_events: Map<EventName, Set<Subscriber>>;
+  - _events: Map<EventName, Set<Subscriber>>;
   Имеет следующие методы:
-  *on<T extends object>(eventName: EventName, callback: (event: T) => void) - Устанавливает обработчик на событие;
-  *off(eventName: EventName, callback: Subscriber) - снимает обработчик с события;
-  *emit<T extends object>(eventName: string, data?: T) - инициирует событие с данными;
-  *onAll(callback: (event: EmitterEvent) => void)  - слушает все события;
-  *offAll() - сбрасывает все события;
-  *trigger<T extends object>(eventName: string, context?: Partial<T>) - делает коллбек триггер, генерирующий событие при вызове;
+  - on<T extends object>(eventName: EventName, callback: (event: T) => void) - Устанавливает обработчик на событие;
+  - off(eventName: EventName, callback: Subscriber) - снимает обработчик с события;
+  - emit<T extends object>(eventName: string, data?: T) - инициирует событие с данными;
+  - onAll(callback: (event: EmitterEvent) => void)  - слушает все события;
+  - offAll() - сбрасывает все события;
+  - trigger<T extends object>(eventName: string, context?: Partial<T>) - делает коллбек триггер, генерирующий событие при вызове;
   Имеет интерфейс:
     interface IEvents {
     on(event: string, callback: (data: T) => void): void;
