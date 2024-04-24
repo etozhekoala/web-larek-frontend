@@ -51,7 +51,7 @@ yarn build
   class API имеет следующие методы:
   - handleResponse(response: Response): Promise<object> - используется для обработки ответа сервера;
   - get(uri: string) - используется для получения ответа сервера;
-  - post(uri: string, data: object, method: ApiPostMethods = 'POST') - используется для отправки данных на сервер.
+  - post(uri: string, data: object, method: ApiPostMethods = 'POST') - используется для отправки данных на сервер.<br>
 **2. class EventEmitter**
   Предоставляет возможность подписаться на все события или слушать их. Имеет свойство:
   - _events: Map<EventName, Set<Subscriber>>;
@@ -69,7 +69,7 @@ yarn build
     trigger(event: string, context?: Partial): (data: T) => void;
   }
   **3. class Component**
-  Отрисовывает интерфейс для взаимодейтсивя с DOM-элементами. Является абстрактным классом.
+  Отрисовывает интерфейс для взаимодейтсивя с DOM-элементами. Является абстрактным классом.<br>
   Имеет следующие методы:
   *toggleClass(element: HTMLElement, class: string) - переключает класс элемента;
   *setText(element: HTMLElement, value: string) - устанавливает текст элементу;
