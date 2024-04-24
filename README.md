@@ -361,15 +361,15 @@ yarn build
 
 - Интерфейс страницы
 
-  ```ts
-    interface IPage {
-    counter: number;
-    catalog: HTMLElement[];
-    locked: boolean;
-  }
+    ```ts
+      interface IPage {
+      counter: number;
+      catalog: HTMLElement[];
+      locked: boolean;
+    }
   ```
 
-  - Интерфейс карточки
+- Интерфейс карточки
 
   ```ts
     export interface ICard {
@@ -384,7 +384,7 @@ yarn build
     }
   ```
 
-  - Интерфейс формы заказа
+- Интерфейс формы заказа
 
   ```ts
     export interface IOrderForm {
@@ -397,7 +397,7 @@ yarn build
     }
   ```
 
-  - Интерфейс объектов для заказа
+- Интерфейс объектов для заказа
 
   ```ts
     export interface IOrder extends IOrderForm {
@@ -405,7 +405,7 @@ yarn build
     }
   ```
 
-  - Интерфейс описания состояния приложения
+- Интерфейс описания состояния приложения
 
   ```ts
     export interface IAppState {
@@ -424,7 +424,7 @@ yarn build
   - Очистить корзину ```clearBasket(container: ICard[]): void;```
   - Передать данные перед отправкой заказа ```setOrder(state: IOrder): void;```<br>
 
-  - Интерфейс карточек
+- Интерфейс карточек
 
   ```ts
     export interface IListCards<T> {
@@ -433,7 +433,7 @@ yarn build
     }
   ``` 
 
-  - Интерфейс получения элементов страницы
+- Интерфейс получения элементов страницы
 
   ```ts
     interface ITotalItems<T> {
@@ -442,7 +442,7 @@ yarn build
     }
   ```
 
-   - Интерфейс данных для заказа
+- Интерфейс данных для заказа
 
   ```ts
     interface IOrderResult {
