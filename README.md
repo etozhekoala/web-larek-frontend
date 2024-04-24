@@ -356,3 +356,84 @@ yarn build
   Имеет сеттеры:
   - ```counter;```
   - ```catalog.```
+
+## Типы данных
+
+  - Интерфейс описания страницы
+
+  ```ts
+    interface IPage {
+      counter: number;
+      catalog: HTMLElement[];
+      locked: boolean;
+    }
+  ```
+
+  - Интерфейс карточки
+
+  ```ts
+    export interface ICard {
+
+      id: string;
+      index?: number;
+      description: string;
+      image?: string;
+      title: string;
+      category: string;
+      price: number | null;
+    }
+  ```
+
+  - Интерфейс формы заказа
+
+  ```ts
+    export interface IOrderForm {
+      email: string;
+      phone: string;
+      address: string;
+      payment: string;
+      total: number;
+      [key: string]: unknown; // позволяет использовать динамический ключ
+    }
+  ```
+
+  - Интерфейс данных для заказа
+
+  ```ts
+    interface IOrderResult {
+      id: string;
+      total: number;
+    }
+  ``` 
+
+  - Интерфейс получения элементов страницы
+
+  ```ts
+    interface ITotalItems<T> {
+      total: number;
+      items: T[];
+    }
+  ```
+
+  - Интерфейс проверки состояния форм
+
+  ```ts
+    interface IFormState {
+      valid: boolean;
+      errors: string;
+    }
+  ```
+
+  - Интерфейс страницы подтверждения
+
+  ```ts
+    interface ISuccess {
+      total: string;
+    }
+
+    interface ICardActions {
+      onClick: (event: MouseEvent) => void;
+    }
+  ```
+
+  
