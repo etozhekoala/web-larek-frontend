@@ -41,7 +41,9 @@ npm run build
 yarn build
 ```
 # Архитектура
+
 ## Базовый код
+
 ### 1. class API<br>
   Реализует взаимодействие с сервером. Конструктор принимает следующие аргументы:
   
@@ -54,6 +56,7 @@ yarn build
   - ```post(uri: string, data: object, method: ApiPostMethods = 'POST')``` - используется для отправки данных на сервер.<br>
   
 ### 2. class EventEmitter<br>
+
   Предоставляет возможность подписаться на все события или слушать их. Имеет свойство:
 
   - ```_events: Map<EventName, Set<Subscriber>>.```<br>
@@ -75,21 +78,80 @@ yarn build
         emit(event: string, data?: T): void;
         trigger(event: string, context?: Partial): (data: T) => void; 
     }
-```
+    ```
 
 ### 3. class Component
   
   Отрисовывает интерфейс для взаимодейтсивя с DOM-элементами. Является абстрактным классом.<br>
   
   Имеет следующие методы:
+
+  - переключает класс элемента:
+
+  ```ts
+    toggleClass(element:HTMLElement, className: string, force?: boolean) {
+      element.classList.toggle(className, force);
+    }
+  ```
+
+  - устанавливает текст элементу:
   
-  - ```toggleClass(element: HTMLElement, class: string)``` - переключает класс элемента;
-  - ```setText(element: HTMLElement, value: string)``` - устанавливает текст элементу;
-  - ```setDisabled(element: HTMLElement, state: boolean)``` - устанавливает блокировку для элемента;
-  - ```setHidden(element: HTMLElement)``` - скрывает элемент;
-  - ```setVisible(element: HTMLElement)``` - показывает элемент;
-  - ```setImage(element: HTMLElement, src: string, alt?: string)``` - добавляет изображение и альтернативный текст элементу;
-  - ```render(data?: any)``` - отрисовывает элемент.
+  ```ts
+    protected setText(element: HTMLElement, value: unknown) {
+    if(element) {
+      element.textContent = String(value);
+    }
+  }
+  ```
+
+  - устанавливает блокировку для элемента:
+
+   ```ts
+    setDisabled(element: HTMLElement, state: boolean) {
+		if (element) {
+			if (state) element.setAttribute('disabled', 'true');
+			else element.removeAttribute('disabled');
+		}
+	}
+  ```
+  
+  - скрывает элемент;
+
+  ```ts
+    protected setHidden(element: HTMLElement) {
+    element.style.display = 'none';
+  }
+  ```
+
+  - показывает элемент;
+
+  ```ts
+    protected setVisible(element: HTMLElement) {
+		element.style.removeProperty('display');
+	}
+  ```
+
+  - добавляет изображение и альтернативный текст элементу;
+
+  ```ts
+    protected setImage(element: HTMLImageElement, src: string, alt?: string) {
+    if (element) {
+      element.src = src;
+      if (alt) {
+        element.alt = alt;
+      }
+    }
+  }
+  ```
+
+  - отрисовывает элемент.
+
+  ```ts
+    render(data?: Partial<T>): HTMLElement {
+    Object.assign(this as object, data ?? {});
+    return this.container;
+  }
+  ```
 
 ### 4. class Model
   

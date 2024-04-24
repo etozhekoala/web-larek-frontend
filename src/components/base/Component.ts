@@ -13,9 +13,20 @@ export abstract class Component<T> {
     }
   }
 
+  setDisabled(element: HTMLElement, state: boolean) {
+		if (element) {
+			if (state) element.setAttribute('disabled', 'true');
+			else element.removeAttribute('disabled');
+		}
+	}
+
   protected setHidden(element: HTMLElement) {
     element.style.display = 'none';
   }
+
+  protected setVisible(element: HTMLElement) {
+		element.style.removeProperty('display');
+	}
 
   protected setImage(element: HTMLImageElement, src: string, alt?: string) {
     if (element) {
