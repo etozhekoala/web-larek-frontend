@@ -359,14 +359,14 @@ yarn build
 
 ## Типы данных
 
-  - Интерфейс описания страницы
+- Интерфейс страницы
 
   ```ts
     interface IPage {
-      counter: number;
-      catalog: HTMLElement[];
-      locked: boolean;
-    }
+    counter: number;
+    catalog: HTMLElement[];
+    locked: boolean;
+  }
   ```
 
   - Интерфейс карточки
@@ -384,18 +384,6 @@ yarn build
     }
   ```
 
-  - Интерфейс описания состояния приложения
-
-  ```ts
-    export interface IAppState {
-      catalog: IProductItem[];
-      basket: string[];
-      preview: string | null;
-      order: IOrderForm | null;
-      loading: boolean;
-  }
-  ```
-
   - Интерфейс формы заказа
 
   ```ts
@@ -409,12 +397,39 @@ yarn build
     }
   ```
 
-  - Интерфейс данных для заказа
+  - Интерфейс объектов для заказа
 
   ```ts
-    interface IOrderResult {
-      id: string;
+    export interface IOrder extends IOrderForm {
+      items: string[];
+    }
+  ```
+
+  - Интерфейс описания состояния приложения
+
+  ```ts
+    export interface IAppState {
+      catalog: IProductItem[];
+      basket: string[];
+      preview: string | null;
+      order: IOrderForm | null;
+      loading: boolean;
+  }
+  ```
+
+  Имеет такие свойства, как:<br>
+  - Добавить элементы в каталог ```setCatalog(items: ICard[]): void;```
+  - Получить цену в корзине ```getPrice(container: ICard[], value: string): string;```
+  - Добавить товар ```addProduct(item: ICard, container: ICard[]): void;```
+  - Очистить корзину ```clearBasket(container: ICard[]): void;```
+  - Передать данные перед отправкой заказа ```setOrder(state: IOrder): void;```<br>
+
+  - Интерфейс карточек
+
+  ```ts
+    export interface IListCards<T> {
       total: number;
+      items: T[];
     }
   ``` 
 
@@ -427,11 +442,11 @@ yarn build
     }
   ```
 
-  - Интерфейс проверки состояния форм
+   - Интерфейс данных для заказа
 
   ```ts
-    interface IFormState {
-      valid: boolean;
-      errors: string;
+    interface IOrderResult {
+      id: string;
+      total: number;
     }
-  ```
+  ``` 
