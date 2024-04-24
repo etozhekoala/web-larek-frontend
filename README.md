@@ -393,7 +393,7 @@ yarn build
       address: string;
       payment: string;
       total: number;
-      [key: string]: unknown; // позволяет использовать динамический ключ
+      [key: string]: unknown;
     }
   ```
 
