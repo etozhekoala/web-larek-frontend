@@ -165,6 +165,64 @@ yarn build
 
   Собирает данные с компонентов и реализует основные методы работы с данными.
 
+  Заполняет каталог:
+
+  ```ts
+    async setCatalog(items: ICard[]) {
+    this.catalog = items.map(item => new ProductItem(item, this.events));
+    this.emitChanges('items:changed', { catalog: this.catalog });
+  }
+  ```
+
+  Получение цены продукта в корзине:
+
+  ```ts
+    async setCatalog(items: ICard[]) {
+    this.catalog = items.map(item => new ProductItem(item, this.events));
+    this.emitChanges('items:changed', { catalog: this.catalog });
+  }
+  ```
+
+  Получение цены продукта в корзине:
+
+  ```ts
+    getPrice(container: CatalogItem[], value: string): string {
+		let totalAmount = 0;
+
+		for (let i = 0; i < container.length; i++) {
+			const current = container[i];
+			totalAmount += current.price;
+		}
+		return totalAmount + value;
+	}
+  ```
+
+  Добавление продукта:
+
+  ```ts
+    addProduct(item: CatalogItem, container: CatalogItem[]) {
+		if (item) {
+			container.push(item);
+		}
+	}
+  ```
+
+  Очистка корзины:
+
+  ```ts
+    clearBasket(container: CatalogItem[]) {
+		container.length = 0;
+	}
+  ```
+
+  Передает данные перед отправкой заказа:
+
+  ```ts
+    setOrder(state: IOrder) {
+		this.order = Object.assign(this.order, state);
+	}
+  ```
+
 ### 1. class ProductItem 
   
   Реализуется от class Model.<br>
