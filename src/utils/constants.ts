@@ -12,5 +12,5 @@ export const categoryMap = new Map([
 ]);
 
 export const settings = {
-
+	
 };

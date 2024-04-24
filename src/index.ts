@@ -15,19 +15,19 @@ const appData = new AppState({}, events);
 const cardCatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
 
 events.on('items:changed', () => {
-  page.catalog = appData.catalog.map((item) => {
-    const card = new CatalogItem(cloneTemplate(cardCatalogTemplate), {
-      onClick: () => events.emit('card: select', item),
-    });
-    return card.render({
-      title: item.title,
-      image: CDN_URL + item.image,
-      description: item.description,
-      price: item.price,
-      category: item.category,
-    })
-  })
-})
+	page.catalog = appData.catalog.map((item) => {
+		const card = new CatalogItem(cloneTemplate(cardCatalogTemplate), {
+			onClick: () => events.emit('card:select', item),
+		});
+		return card.render({
+			title: item.title,
+			image: CDN_URL + item.image,
+			description: item.description,
+			price: item.price,
+			category: item.category,
+		});
+	});
+});
 
 api
   .get('/product')

@@ -4,7 +4,7 @@ export abstract class Component<T> {
   }
 
   toggleClass(element:HTMLElement, className: string, force?: boolean) {
-    element.classList.toggle(className, force);
+    element.classList.toggle(className, force); 
   }
 
   protected setText(element: HTMLElement, value: unknown) {
