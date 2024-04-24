@@ -53,8 +53,6 @@ yarn build
   - get(uri: string) - используется для получения ответа сервера;
   - post(uri: string, data: object, method: ApiPostMethods = 'POST') - используется для отправки данных на сервер.<br>
   
-  [//]: <>
-  
 **2. class EventEmitter**<br>
   Предоставляет возможность подписаться на все события или слушать их. Имеет свойство:
   - _events: Map<EventName, Set<Subscriber>>;
@@ -72,8 +70,6 @@ yarn build
     emit(event: string, data?: T): void;
     trigger(event: string, context?: Partial): (data: T) => void; }
   ```
-  [//]: <>
-
   **3. class Component**
   Отрисовывает интерфейс для взаимодейтсивя с DOM-элементами. Является абстрактным классом.<br>
   Имеет следующие методы:
