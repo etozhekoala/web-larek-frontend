@@ -78,15 +78,15 @@ yarn build
         emit(event: string, data?: T): void;
         trigger(event: string, context?: Partial): (data: T) => void; 
     }
-    ```
+```
 
 ### 3. class Component
   
   Отрисовывает интерфейс для взаимодейтсивя с DOM-элементами. Является абстрактным классом.<br>
   
-  Имеет следующие методы:
+  Имеет следующие методы:<br>
 
-  - переключает класс элемента:
+  переключает класс элемента:
 
   ```ts
     toggleClass(element:HTMLElement, className: string, force?: boolean) {
@@ -94,7 +94,7 @@ yarn build
     }
   ```
 
-  - устанавливает текст элементу:
+  устанавливает текст элементу:
   
   ```ts
     protected setText(element: HTMLElement, value: unknown) {
@@ -104,7 +104,7 @@ yarn build
   }
   ```
 
-  - устанавливает блокировку для элемента:
+  устанавливает блокировку для элемента:
 
    ```ts
     setDisabled(element: HTMLElement, state: boolean) {
@@ -115,7 +115,7 @@ yarn build
 	}
   ```
   
-  - скрывает элемент;
+  скрывает элемент:
 
   ```ts
     protected setHidden(element: HTMLElement) {
@@ -123,7 +123,7 @@ yarn build
   }
   ```
 
-  - показывает элемент;
+  показывает элемент:
 
   ```ts
     protected setVisible(element: HTMLElement) {
@@ -131,7 +131,7 @@ yarn build
 	}
   ```
 
-  - добавляет изображение и альтернативный текст элементу;
+  добавляет изображение и альтернативный текст элементу:
 
   ```ts
     protected setImage(element: HTMLImageElement, src: string, alt?: string) {
@@ -144,7 +144,7 @@ yarn build
   }
   ```
 
-  - отрисовывает элемент.
+  отрисовывает элемент:
 
   ```ts
     render(data?: Partial<T>): HTMLElement {
