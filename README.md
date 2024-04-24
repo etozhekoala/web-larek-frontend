@@ -55,8 +55,11 @@ yarn build
   
 ### 2. class EventEmitter<br>
   Предоставляет возможность подписаться на все события или слушать их. Имеет свойство:
-  - ```_events: Map<EventName, Set<Subscriber>>.```
+
+  - ```_events: Map<EventName, Set<Subscriber>>.```<br>
+  
   Имеет следующие методы:
+  
   - ```on<T extends object>(eventName: EventName, callback: (event: T) => void)``` - Устанавливает обработчик на событие;
   - ```off(eventName: EventName, callback: Subscriber)``` - снимает обработчик с события;
   - ```emit<T extends object>(eventName: string, data?: T)``` - инициирует событие с данными;
@@ -65,15 +68,21 @@ yarn build
   - ```trigger<T extends object>(eventName: string, context?: Partial)<T>``` - делает коллбек триггер, генерирующий событие при вызов.<br>
 
   Имеет интерфейс:
+  
     ```TypeScript
     interface IEvents {
     on(event: string, callback: (data: T) => void): void;
     emit(event: string, data?: T): void;
     trigger(event: string, context?: Partial): (data: T) => void; }
+  
   ```
+
 ### 3. class Component
+  
   Отрисовывает интерфейс для взаимодейтсивя с DOM-элементами. Является абстрактным классом.<br>
+  
   Имеет следующие методы:
+  
   - ```toggleClass(element: HTMLElement, class: string)``` - переключает класс элемента;
   - ```setText(element: HTMLElement, value: string)``` - устанавливает текст элементу;
   - ```setDisabled(element: HTMLElement, state: boolean)``` - устанавливает блокировку для элемента;
@@ -81,19 +90,19 @@ yarn build
   - ```setVisible(element: HTMLElement)``` - показывает элемент;
   - ```setImage(element: HTMLElement, src: string, alt?: string)``` - добавляет изображение и альтернативный текст элементу;
   - ```render(data?: any)``` - отрисовывает элемент.
+
 ### 4. class Model
-  Является дженериком и абстракным классом моделей данных.
-  Имеет следующие методы:
-  - ```toggleClass(element: HTMLElement, class: string)``` - переключает класс элемента;
-  - ```setText(element: HTMLElement, value: string)``` - устанавливает текст;
-  - ```setDisabled(element: HTMLElement, state: boolean)``` - устанавливает блокировку;
-  - ```setHidden(element: HTMLElement)``` - скрывает элемент;
-  - ```setVisible(element: HTMLElement)``` - показывает элемент;
-  - ```setImage(element: HTMLElement, src: string, alt?: string)``` - добавляет изображение и альтернативный текст;
-  - ```render(data?: any)``` - отрисовывает элемент.
+  
+  Является абстрактным классом и предназначен для создания данных модели.<br>
+  Использует метод ```emitChanges(event: string, payload?: object)``` для уведомления об изменениях.<br>
+  Данные модели и events используются в конструкторе при взаимодействии с EventEmitter.
+
 ## Компоненты модели данных 
+
 ### 1. class ProductItem 
-  Реализуется от class Model.
+  
+  Реализуется от class Model.<br>
+  
   Конструктор принимает следующие аргументы:
   - id: string;
   - title: string;
@@ -103,19 +112,28 @@ yarn build
   - price: number | null.
 
 ### 2. class BasketItem
+  
   Имеет следующие свойства:
   *id: string;
   *title: string;
   *price: number | null.
+
 ### 3. class OrderForm
+  
   Имеет свойство address: string;
+
 ### 4. class ContactsForm
+  
   Имеет следующие свойства:
   *email: string;
   *phone: string.
+
 ### 5. class OrderResult
-Имеет свойство  id: string.
+
+  Имеет свойство  id: string.
+
 ### 6. class AppState
+  
   Реализуется от class Model.
   Предназначен для хранения актуального состояния приложения.
   Имеет следующие  методы:
@@ -125,8 +143,11 @@ yarn build
   *setPreview;
   *setOrderFields;
   *validateOrder.
+
 ## Компоненты представления
+
 ### 1. class Modal
+
   Предназначен для работы модального окна.
   Конструктор принимает данные, наследуемые от class Component, а также:
   *_closeButton;
@@ -136,7 +157,9 @@ yarn build
   *close - закрытие;
   *render - для отрисовки.
   Также имеет сеттер для установки контента.
+
 ### 2. class Form
+
   Предназначен для работы с формами.
   Конструктор принимает данные, наследуемые от class Component, а также:
   *_submit;
@@ -146,7 +169,9 @@ yarn build
   *errors;
   Имеет метод:
   *render.
+
 ### 3. class Basket 
+
   Предназначен для работы с корзиной.
   Конструктор принимает данные, наследуемые от class Component, а также:
   *_list;
@@ -155,17 +180,23 @@ yarn build
   *items;
   *selected;
   *total.
+
 ### 4. class Tabs 
+
   Предназначен для работы со способами оплаты.
   Конструктор принимает данные, наследуемые от class Component, а также:
   *_buttons.
   Имеет сеттер:
   *selected.
+
 ### 5. class Success 
+
   Предназначен для отображения окончания оплаты.
   Конструктор принимает данные, наследуемые от class Component, а также:
   *_close.
+
 ### 6. class Card 
+
   Предназначен для отображения карточки товара.
   Конструктор принимает данные, наследуемые от class Component, а также:
   *_title;
@@ -180,12 +211,16 @@ yarn build
   Имеет геттеры:
   *id;
   *title.
+
 ### 7. class Order 
+
   Предназначен для отображения форм.
   Конструктор принимает данные, наследуемые от class Form, а также имеет сеттеры:
   *phone;
   *email.
+
 ### 8. class Page 
+
   Предназначен для отображения данных на начальной странице.
   Конструктор принимает данные, наследуемые от class Component, а также:
   *_counter;
