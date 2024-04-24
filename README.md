@@ -55,7 +55,7 @@ yarn build
   
 ### 2. class EventEmitter<br>
   Предоставляет возможность подписаться на все события или слушать их. Имеет свойство:
-  - _events: ```Map<EventName, Set<Subscriber>>;```
+  - ```_events: Map<EventName, Set<Subscriber>>.```
   Имеет следующие методы:
   - ```on<T extends object>(eventName: EventName, callback: (event: T) => void)``` - Устанавливает обработчик на событие;
   - ```off(eventName: EventName, callback: Subscriber)``` - снимает обработчик с события;
@@ -71,7 +71,6 @@ yarn build
     emit(event: string, data?: T): void;
     trigger(event: string, context?: Partial): (data: T) => void; }
   ```
-  <br>
 ### 3. class Component
   Отрисовывает интерфейс для взаимодейтсивя с DOM-элементами. Является абстрактным классом.<br>
   Имеет следующие методы:
@@ -96,14 +95,13 @@ yarn build
 ### 1. class ProductItem 
   Реализуется от class Model.
   Конструктор принимает следующие аргументы:
-  ```TypeScript
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  image: string;
-  price: number | null.
-  ```
+  - id: string;
+  - title: string;
+  - description: string;
+  - category: string;
+  - image: string;
+  - price: number | null.
+
 ### 2. class BasketItem
   Имеет следующие свойства:
   *id: string;
