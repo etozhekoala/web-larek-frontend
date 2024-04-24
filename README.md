@@ -52,17 +52,19 @@ yarn build
   - handleResponse(response: Response): Promise<object> - используется для обработки ответа сервера;
   - get(uri: string) - используется для получения ответа сервера;
   - post(uri: string, data: object, method: ApiPostMethods = 'POST') - используется для отправки данных на сервер.<br>
+  [//]: <>
   
 ### 2. class EventEmitter**<br>
   Предоставляет возможность подписаться на все события или слушать их. Имеет свойство:
-  - _events: Map<EventName, Set<Subscriber>>;
+  - _events: ```Map<EventName, Set<Subscriber>>;```
   Имеет следующие методы:
-  - on<T extends object>(eventName: EventName, callback: (event: T) => void) - Устанавливает обработчик на событие;
+  - on```<T extends object>(eventName: EventName, callback: (event: T) => void)``` - Устанавливает обработчик на событие;
   - off(eventName: EventName, callback: Subscriber) - снимает обработчик с события;
   - emit<T extends object>(eventName: string, data?: T) - инициирует событие с данными;
   - onAll(callback: (event: EmitterEvent) => void)  - слушает все события;
   - offAll() - сбрасывает все события;
-  - trigger<T extends object>(eventName: string, context?: Partial<T>) - делает коллбек триггер, генерирующий событие при вызове;<br>
+  - trigger```<T extends object>(eventName: string, context?: Partial)<T>``` - делает коллбек триггер, генерирующий событие при вызове;<br>
+
   Имеет интерфейс:
     ```
     interface IEvents {
