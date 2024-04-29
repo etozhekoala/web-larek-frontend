@@ -9,6 +9,7 @@ import { AppState } from './components/AppData';
 import { cloneTemplate, ensureElement } from './utils/utils';
 import { ICard, IListCards } from './types';
 import { Modal } from './components/common/Modal';
+import { Basket } from './components/common/Basket';
 
 const events = new EventEmitter();
 const api = new Api(API_URL);
@@ -16,6 +17,9 @@ const page = new Page(document.body, events);
 const appData = new AppState({}, events);
 const cardCatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
 const selectedCardTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
+const basketTemplate = ensureElement<HTMLTemplateElement>('#basket');
+const basketCardTemplate = ensureElement<HTMLTemplateElement>('#card-basket');
+const basket = new Basket(cloneTemplate(basketTemplate), events);
 const modal = new Modal(ensureElement<HTMLElement>('#modal-container'), events);
 
 events.on('items:changed', () => {
@@ -50,6 +54,29 @@ events.on('card:select', (item: ProductItem) => {
 			price: item.price,
 			category: item.category,
 		}),
+	});
+});
+
+events.on('basket:change', (item: ProductItem | null) => {
+
+	const cardTemplate = new CatalogItem(cloneTemplate(basketCardTemplate), {
+		onClick: (event) => events.emit('basket:delete', item),
+	});
+
+	if (item !== null) {
+		cardTemplate.render({
+			id: item.id,
+			title: item.title,
+			price: item.price,
+		});
+		appData.addProduct(cardTemplate, basket.selected);
+		modal.close();
+	} else {
+		events.emit('basket:render');
+	}
+
+	page.render({
+		counter: basket.selected.length,
 	});
 });
 

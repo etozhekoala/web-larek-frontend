@@ -31,6 +31,10 @@ export class Page extends Component<IPage> {
     this._catalog.replaceChildren(...items);
   }
 
+  set counter(value: number) {
+    this.setText(this._counter, String(value));
+  }
+
   set locked(value:boolean) {
     if(value) {
       this._wrapper.classList.add('page__wrapper_locked');
