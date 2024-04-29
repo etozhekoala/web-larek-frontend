@@ -1,6 +1,6 @@
 import './scss/styles.scss';
 import { Api } from './components/base/api';
-import { API_URL, CDN_URL } from './utils/constants';
+import { API_URL, CDN_URL, catalogValue } from './utils/constants';
 import { EventEmitter } from './components/base/events';
 import { Page } from './components/Page';
 import { CatalogItem } from './components/Card';
@@ -78,6 +78,26 @@ events.on('basket:change', (item: ProductItem | null) => {
 	page.render({
 		counter: basket.selected.length,
 	});
+});
+
+events.on ('basket:render', () => {
+	modal.render({
+		content: basket.render({
+			items: basket.selected.map((element, index) => {
+				return element.render({
+					index: index + 1,
+				});
+			}),
+			price: appData.getPrice(basket.selected, catalogValue),
+		}),
+	});
+});
+
+events.on('basket:delete', (item: ProductItem) => {
+	basket.selected = basket.selected.filter((element) => {
+		return element.id !== item.id;
+	});
+	events.emit('basket:change', null);
 });
 
 events.on('modal:open', () => {
