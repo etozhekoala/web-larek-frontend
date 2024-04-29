@@ -2,6 +2,7 @@ import { Component } from "./base/Component";
 import { ICard } from "../types";
 import { ensureElement } from "../utils/utils";
 import { categoryMap, catalogValue } from "../utils/constants";
+import { ProductItem } from "./AppData";
 
 interface ICardActions {
   onClick: (event: MouseEvent) => void;
@@ -44,6 +45,18 @@ export class Card extends Component<ICard> {
           container.addEventListener('click', actions.onClick);
         }
       }
+    }
+
+    checkInBasket(item: ProductItem, container: CatalogItem[]) {
+      this.setDisabled(this._button, false);
+      this.setText(this._button, 'В корзину');
+
+      container.forEach((element) => {
+        if (item.id === element.id) {
+          this.setDisabled(this._button, true);
+          this.setText(this._button, 'Уже добавлено');
+        }
+      });
     }
 
     set index(value: string) {

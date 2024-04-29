@@ -55,6 +55,7 @@ events.on('card:select', (item: ProductItem) => {
 			category: item.category,
 		}),
 	});
+	card.checkInBasket(item, basket.selected);
 });
 
 events.on('basket:change', (item: ProductItem | null) => {
