@@ -52,8 +52,6 @@ export interface IOrderResult {
 	total: number;
 }
 
-export type FormErrors = Partial<Record<keyof IOrderForm, string>>;
-
 export interface ISuccess {
     description: number;
 }

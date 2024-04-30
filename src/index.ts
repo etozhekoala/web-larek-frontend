@@ -10,6 +10,7 @@ import { cloneTemplate, ensureElement } from './utils/utils';
 import { ICard, IListCards } from './types';
 import { Modal } from './components/common/Modal';
 import { Basket } from './components/common/Basket';
+import { Order } from './components/Order';
 
 const events = new EventEmitter();
 const api = new Api(API_URL);
@@ -21,6 +22,8 @@ const basketTemplate = ensureElement<HTMLTemplateElement>('#basket');
 const basketCardTemplate = ensureElement<HTMLTemplateElement>('#card-basket');
 const basket = new Basket(cloneTemplate(basketTemplate), events);
 const modal = new Modal(ensureElement<HTMLElement>('#modal-container'), events);
+const orderTemplate = ensureElement<HTMLTemplateElement>('#order');
+const address = new Order(cloneTemplate(orderTemplate), events);
 
 events.on('items:changed', () => {
 	page.catalog = appData.catalog.map((item) => {
@@ -107,6 +110,16 @@ events.on('modal:open', () => {
 
 events.on('modal:close', () => {
 	page.locked = false;
+});
+
+events.on('address:render', () => {
+	modal.render({
+		content: address.render({
+			valid: address.valid,
+			errors: address.errors,
+			address: '',
+		}),
+	});
 });
 
 api
