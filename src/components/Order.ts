@@ -1,126 +1,140 @@
-import { Form } from "./common/Form";
-import { IOrderForm, IOrder } from "../types";
-import { IEvents } from "./base/events";
-import { ensureAllElements } from "../utils/utils";
+import { Form } from './common/Form';
+import { IEvents } from './base/events';
+import { IOrder, IOrderForm } from '../types';
+import { ensureAllElements } from '../utils/utils';
 
 export class Order extends Form<IOrderForm> {
-  protected _button: HTMLElement;
-  protected _actions: HTMLElement;
-  protected _paymentButton: HTMLElement[];
-  protected _inputs: HTMLInputElement[];
+	protected _button: HTMLElement;
+	protected _actions: HTMLElement;
+	protected _paymentButton: HTMLElement[];
+	protected _inputs: HTMLInputElement[];
+	order: IOrder | null = {
+		email: '',
+		phone: '',
+		address: '',
+		payment: 'none',
+		total: null,
+		items: [],
+	};
 
-    order: IOrder | null = {
-      email: '',
-      phone: '',
-      address: '',
-      payment: 'none',
-      total: null,
-      items: [],
-    };
+	constructor(container: HTMLFormElement, events: IEvents) {
+		super(container, events);
 
-    constructor(container: HTMLFormElement, events: IEvents) {
-      super(container, events);
+		this._inputs = Array.from(this.container.querySelectorAll('.form__input'));
 
-      this._inputs = Array.from(this.container.querySelectorAll('.form__input'));
-      this._actions = container.querySelector('.modal__actions');
-      this._button = this._actions.querySelector('button');
+		this._actions = container.querySelector('.modal__actions');
 
-      if(this._button.classList.contains('order__button')) {
-        this._button.addEventListener('click', () => {
-          events.emit('contacts: render');
-        });
-      } else {
-        this._button.addEventListener('click', () => {
-          events.emit('order:post');
-        });
-      }
+		this._button = this._actions.querySelector('button');
 
-      this._paymentButton = ensureAllElements<HTMLElement>('.button_alt', this.container);
+		if (this._button.classList.contains('order__button')) {
+			this._button.addEventListener('click', () => {
+				events.emit('contacts:render');
+			});
+		} else {
+			this._button.addEventListener('click', () => {
+				events.emit('order:post');
+			});
+		}
 
-      if(this._paymentButton) {
-        this._paymentButton.forEach((element) => {
-          element.addEventListener('click', (event) => {
-            this.toggleSelected(event.currentTarget as HTMLElement);
-          });
-        });
-      }
+		this._paymentButton = ensureAllElements<HTMLElement>(
+			'.button_alt',
+			this.container
+		);
 
-      this.errors = '';
-      this.enableValidation();
-      this.setOrderFields();
-    }
+		if (this._paymentButton) {
+			this._paymentButton.forEach((element) => {
+				element.addEventListener('click', (event) => {
+					this.toggleSelected(event.currentTarget as HTMLElement);
+				});
+			});
+		}
 
-    set address(value: string) {
-      (this.container.elements.namedItem('address') as HTMLInputElement),value = value;
-    }
+		this.errors = '';
+		this.enableValidation();
+		this.setOrderFields();
+	}
 
-    protected toggleSelected(element: HTMLElement) {
-      const activeBtn = this.container.querySelector('.button_alt-active');
-  
-      activeBtn
-        ? this.toggleClass(activeBtn as HTMLElement, 'button_alt-active')
-        : null;
-      this.toggleClass(element, 'button_alt-active');
-  
-      this.order.payment = element.getAttribute('name');
-  
-      this.changeState();
-    }
+  set address(value: string) {
+		(this.container.elements.namedItem('address') as HTMLInputElement).value =
+			value;
+	}
 
-    protected setOrderFields() {
-      this._inputs.forEach((element) => {
-        element.addEventListener('input', (event) => {
-          const name = element.name;
-          
-          this.order[name] = element.value;
-        });
-      });
-    }
+	set email(value: string) {
+		(this.container.elements.namedItem('email') as HTMLInputElement).value =
+			value;
+	}
 
-    protected enableValidation() {
-      this._inputs.forEach((element) => {
-        element.addEventListener('input', (event) =>{
-          this.changeState(element);
-        });
-      });
+  set phone(value: string) {
+		(this.container.elements.namedItem('phone') as HTMLInputElement).value =
+			value;
+	}
 
-      this.setHidden(this._errors);
-    }
+	protected toggleSelected(element: HTMLElement) {
+		const activeBtn = this.container.querySelector('.button_alt-active');
 
-    protected checkInputValidation(element: HTMLInputElement) {
-      if (element.validity.valid) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+		activeBtn
+			? this.toggleClass(activeBtn as HTMLElement, 'button_alt-active')
+			: null;
+		this.toggleClass(element, 'button_alt-active');
 
-    protected changeState(element?: HTMLInputElement) {
-      const value = this._inputs.map((element) => {
-        if (element.value === '' || this.checkInputValidation(element) !== true) {
-          return false;
-        }
-      });
+		this.order.payment = element.getAttribute('name');
 
-      const validity = value.includes(false);
+		this.changeState();
+	}
 
-      !validity && this.order.payment !== 'none'
-        ? (this.valid = true)
-        : (this.valid = false);
+	protected setOrderFields() {
+		this._inputs.forEach((element) => {
+			element.addEventListener('input', (event) => {
+				const name = element.name;
 
-        element ? this.showError(element) : null;
-    }
+				this.order[name] = element.value;
+			});
+		});
+	}
 
-    protected showError(element: HTMLInputElement) {
-      if (element.validity.valid) {
-        this.setHidden(this._errors);
-        this.errors = '';
-      } else {
-        element.validity.patternMismatch
-          ? (this.errors = element.dataset.errorMessage)
-          : (this.errors = element.validationMessage);
-  
-        this.setVisible(this._errors);
-      }
-    }
+	protected enableValidation() {
+		this._inputs.forEach((element) => {
+			element.addEventListener('input', (event) => {
+				this.changeState(element);
+			});
+		});
+		this.setHidden(this._errors);
+	}
+
+	protected checkInputValidation(element: HTMLInputElement) {
+		if (element.validity.valid) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	protected changeState(element?: HTMLInputElement) {
+		const value = this._inputs.map((element) => {
+			if (element.value === '' || this.checkInputValidation(element) !== true) {
+				return false;
+			}
+		});
+
+		const validity = value.includes(false);
+
+		!validity && this.order.payment !== 'none'
+			? (this.valid = true)
+			: (this.valid = false);
+
+		element ? this.showError(element) : null;
+	}
+
+	protected showError(element: HTMLInputElement) {
+		if (element.validity.valid) {
+			this.setHidden(this._errors);
+			this.errors = '';
+		} else {
+			element.validity.patternMismatch
+				? (this.errors = element.dataset.errorMessage)
+				: (this.errors = element.validationMessage);
+
+			this.setVisible(this._errors);
+		}
+	}
 }

@@ -13,17 +13,24 @@ import { Basket } from './components/common/Basket';
 import { Order } from './components/Order';
 
 const events = new EventEmitter();
+
 const api = new Api(API_URL);
 const page = new Page(document.body, events);
 const appData = new AppState({}, events);
+
 const cardCatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
 const selectedCardTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
+
 const basketTemplate = ensureElement<HTMLTemplateElement>('#basket');
 const basketCardTemplate = ensureElement<HTMLTemplateElement>('#card-basket');
 const basket = new Basket(cloneTemplate(basketTemplate), events);
+
 const modal = new Modal(ensureElement<HTMLElement>('#modal-container'), events);
 const orderTemplate = ensureElement<HTMLTemplateElement>('#order');
+
 const address = new Order(cloneTemplate(orderTemplate), events);
+const contactsTemplate = ensureElement<HTMLTemplateElement>('#contacts');
+const contacts = new Order(cloneTemplate(contactsTemplate), events);
 
 events.on('items:changed', () => {
 	page.catalog = appData.catalog.map((item) => {
@@ -120,6 +127,18 @@ events.on('address:render', () => {
 			address: '',
 		}),
 	});
+});
+
+events.on('contacts:render', () => {
+	modal.render({
+		content: contacts.render({
+			valid: contacts.valid,
+			errors: contacts.errors,
+			email: '',
+			phone: '',
+		}),
+	});
+	contacts.order.payment = address.order.payment;
 });
 
 api
