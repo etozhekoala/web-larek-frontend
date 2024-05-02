@@ -7,10 +7,11 @@ import { CatalogItem } from './components/Card';
 import { ProductItem } from './components/AppData';
 import { AppState } from './components/AppData';
 import { cloneTemplate, ensureElement } from './utils/utils';
-import { ICard, IListCards } from './types';
+import { ICard, IListCards, IOrderResult } from './types';
 import { Modal } from './components/common/Modal';
 import { Basket } from './components/common/Basket';
 import { Order } from './components/Order';
+import { Success } from './components/common/Success';
 
 const events = new EventEmitter();
 
@@ -31,6 +32,8 @@ const orderTemplate = ensureElement<HTMLTemplateElement>('#order');
 const address = new Order(cloneTemplate(orderTemplate), events);
 const contactsTemplate = ensureElement<HTMLTemplateElement>('#contacts');
 const contacts = new Order(cloneTemplate(contactsTemplate), events);
+
+const successTemplate = ensureElement<HTMLTemplateElement>('#success');
 
 events.on('items:changed', () => {
 	page.catalog = appData.catalog.map((item) => {
@@ -140,6 +143,54 @@ events.on('contacts:render', () => {
 	});
 	contacts.order.payment = address.order.payment;
 });
+
+events.on('data:set', () => {
+	let items: string[] = [];
+	basket.selected.forEach((element) => {
+		items.push(element.id);
+	});
+
+	appData.setOrder({
+		address: address.order.payment,
+		payment: address.order.payment,
+		phone: contacts.order.phone,
+		items: items,
+		email: contacts.order.email,
+		total: parseInt(basket.total),
+	});
+});
+
+events.on('order:submit', () => {
+	const success = new Success(cloneTemplate(successTemplate), {
+		onClick: () => {
+			appData.clearBasket(basket.selected);
+			events.emit('basket:change', null);
+			modal.close();
+		},
+	});
+
+	modal.render({
+		content: success.render({
+			total: basket.price,
+		}),
+	});
+});
+
+events.on('order:post', () => {
+	events.emit('data:set');
+
+	api
+		.post('/order', appData.order)
+		.then((data: IOrderResult) => data)
+		.then(() => {
+			events.emit('order:submit');
+		})
+		.catch((result) => {
+			modal.close();
+			console.error(result);
+		});
+});
+
 
 api
   .get('/product')
